@@ -1,5 +1,6 @@
 package vn.ThangKa.LapTopShop.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,18 +15,14 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
-
-    @RequestMapping("/admin/user")
-    public String createUser(Model model) {
+    @RequestMapping(value = "/admin/user",method = RequestMethod.GET)
+    public String createUser(Model model){
         model.addAttribute("newUser", new User());
-        return "admin/user/create";
+        return "/admin/user/create";
     }
-
-    @RequestMapping(value = "/admin/user/create", method = RequestMethod.POST)
-    public void submit(Model model,  @ModelAttribute("newUser") User user) {
+    @RequestMapping(value = "/admin/user/create1",method = RequestMethod.POST)
+    public void submit(Model model, @ModelAttribute("newUser") User user){
 
         System.out.println(userService.createUser(user).toString());
     }
-
-
 }
