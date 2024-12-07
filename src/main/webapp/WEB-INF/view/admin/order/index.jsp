@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Detail user</title>
+    <title>Dashboard - SB Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -24,36 +24,9 @@
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Manager User</h1><br>
                 <a href="/admin/index">DashBoard</a>/
-                <a href="/admin/user">User</a>/
-                <a href="/admin/user">Detail</a>
-                <div class="mt-5">
-                    <div class="row">
-                        <div class="col-md-6 col-12 mx-auto">
-                            <h1>Detail user</h1><hr>
-                            <div class="mb-3">
-                                <label class="form-label">Email address:</label><br>
-                                <label class="form-label">${user.email}</label>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password:</label><br>
-                                <label class="form-label">${user.password}</label>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Phone Number:</label><br>
-                                <label class="form-label">${user.phone}</label>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Full Name:</label><br>
-                                <label class="form-label">${user.fullName}</label>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Address:</label><br>
-                                <label class="form-label">${user.address}</label>
-                            </div>
+                <a href="/admin/">Order</a>
 
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </main>
         <jsp:include page="../layout/footer.jsp" />
@@ -68,8 +41,6 @@
 <script src="/js/datatables-simple-demo.js"></script>
 </body>
 </html>
-
-
 
 
 

@@ -3,9 +3,12 @@ package vn.ThangKa.LapTopShop.domain;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +22,9 @@ public class User {
     @ManyToOne()
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public Long getId() {
         return id;
@@ -83,6 +89,13 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     @Override
     public String toString() {
@@ -93,6 +106,9 @@ public class User {
                 ", fullName='" + fullName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", role=" + role +
+                ", orders=" + orders +
                 '}';
     }
 }

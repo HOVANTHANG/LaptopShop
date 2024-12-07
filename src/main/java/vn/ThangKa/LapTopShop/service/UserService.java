@@ -32,13 +32,9 @@ public class UserService {
     }
 
     public void UpdateUser(User user) {
-        User userupdate = findUserById(user.getId());
-        userupdate.setEmail(user.getEmail());
-        userupdate.setPassword(user.getPassword());
-        userupdate.setFullName(user.getFullName());
-        userupdate.setPhone(user.getPhone());
-        userupdate.setAddress(user.getAddress());
-        userRepository.save(userupdate);
+
+
+        userRepository.saveAndFlush(user);
     }
     public void DeleteUser(Long id) {
         userRepository.deleteById(id);
