@@ -52,20 +52,32 @@
                                        enctype="multipart/form-data"
                                        class="row">
                                 <div class="mb-3 col-md-6 col-12">
+                                    <c:set var="emailHasBindError">
+                                        <form:errors path="email" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label class="form-label">Email address</label>
-                                    <form:input type="email" class="form-control" path="email"/>
+                                    <form:input type="email" class="form-control ${not empty emailHasBindError? 'is-invalid':''}" path="email"/>
+                                    ${emailHasBindError}
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
+                                    <c:set var="passwordHasBindError">
+                                        <form:errors path="password" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label class="form-label">Password</label>
-                                    <form:input type="password" class="form-control" path="password"/>
+                                    <form:input type="password" class="form-control ${not empty passwordHasBindError? 'is-invalid':''}" path="password"/>
+                                    ${passwordHasBindError}
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
                                     <label class="form-label">Phone Number</label>
                                     <form:input type="text" class="form-control" path="phone"/>
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
+                                    <c:set var="fullnameHasBindError">
+                                        <form:errors path="fullName"  cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label class="form-label">Full Name</label>
-                                    <form:input type="text" class="form-control" path="fullName"/>
+                                    <form:input type="text" class="form-control ${not empty fullnameHasBindError ?'is-invalid':''}" path="fullName"/>
+                                    ${fullnameHasBindError}
                                 </div>
                                 <div class="mb-3 col-md-12 col-12">
                                     <label class="form-label">Address</label>
@@ -74,7 +86,7 @@
                                 <div class="mb-3 col-md-6 col-12">
                                     <label class="form-label">Role</label>
                                     <form:select class="form-select" path="role.name">
-                                        <form:option value="UESR">User</form:option>
+                                        <form:option value="USER">User</form:option>
                                         <form:option value="ADMIN">Admin</form:option>
                                     </form:select>
                                 </div>

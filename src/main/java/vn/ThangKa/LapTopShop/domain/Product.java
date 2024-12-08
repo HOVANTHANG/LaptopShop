@@ -1,6 +1,9 @@
 package vn.ThangKa.LapTopShop.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -10,11 +13,16 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "Name can not empty")
+    @Size(min=4,message = "Name product must be at least 4 character")
     private String name;
+    @NotNull(message = "Price can not empty")
+    @DecimalMin(value = "0",inclusive = false,message = "Price must be greater than 0")
     private double price;
     private String image;
     private String detailDesc;
     private String shortDesc;
+    @NotNull(message = "Quantity can not empty")
     private Long quantity;
     private Long sold;
     private String factory;

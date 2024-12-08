@@ -1,9 +1,12 @@
 package vn.ThangKa.LapTopShop.controller.admin;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vn.ThangKa.LapTopShop.configuration.SecurityConfiguration;
@@ -44,16 +47,25 @@ public class UserController {
 
     @PostMapping(value = "/admin/user/saveuser")
     public String submit(Model model,
-                         @ModelAttribute("newUser") User user,
+                         @ModelAttribute("newUser") @Valid User user,
+                         BindingResult newUserbindingResult,
                         // @RequestParam("fileAnh") MultipartFile[] file
                          @RequestParam("fileAnh") MultipartFile file
                          ){
+        List<FieldError> errors = newUserbindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println("<<<<"+error.getField()+"-"+error.getDefaultMessage());
+        }
+        if (newUserbindingResult.hasErrors()) {
+            return "/admin/user/create";
+        }
         String avatar=this.uploadFile.uploadFileHandler(file,"avatar");
         String hashPassword=this.passwordEncoder.encode(user.getPassword());
 
 
         user.setAvatar(avatar);
         user.setPassword(hashPassword);
+        System.out.println(user.getRole().getName());
         user.setRole(roleService.getrolebyname(user.getRole().getName()));
 
        userService.createUser(user);
@@ -78,9 +90,18 @@ public class UserController {
 
     @RequestMapping(value = "/admin/user/update",method = RequestMethod.POST)
     public String update(Model model,
-                         @ModelAttribute("Userupdate") User user,
+                         @ModelAttribute("Userupdate") @Valid  User user,
+                         BindingResult userupdateBindingResult,
                          @RequestParam("fileAnh") MultipartFile file){
         User updateUser = userService.findUserById(user.getId());
+        List<FieldError> errors = userupdateBindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println("<<<<"+error.getField()+"-"+error.getDefaultMessage());
+        }
+        if (userupdateBindingResult.hasErrors()) {
+            model.addAttribute("fileAnh", updateUser.getAvatar());
+            return "/admin/user/update";
+        }
         if(!file.isEmpty()) {
             String avatar = this.uploadFile.uploadFileHandler(file, "avatar");
             updateUser.setAvatar(avatar);

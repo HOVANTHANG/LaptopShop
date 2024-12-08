@@ -8,7 +8,7 @@ public class DashboardController {
 
 
 
-    @RequestMapping("/admin/index")
+    @RequestMapping("/admin")
     public String getdashboard() {
         return "admin/dashboard/index";
     }

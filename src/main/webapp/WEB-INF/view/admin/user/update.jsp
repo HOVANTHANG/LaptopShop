@@ -53,16 +53,26 @@
                                     <form:input type="text" class="form-control" path="id"/>
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
+                                    <c:set var="emailHasBindError">
+                                        <form:errors path="email" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label class="form-label">Email address</label>
-                                    <form:input type="email" class="form-control" path="email"/>
+                                    <form:input type="email" class="form-control ${not empty emailHasBindError?'is-invalid':''}" path="email"/>
+                                    ${emailHasBindError}
                                 </div>
+                                    <form:input type="hidden" class="form-control" path="password"/>
+
                                 <div class="mb-3 col-md-6 col-12">
                                     <label class="form-label">Phone Number</label>
                                     <form:input type="text" class="form-control" path="phone"/>
                                 </div>
                                 <div class="mb-3 col-md-6 col-12">
+                                    <c:set var="fullnameHasBindError">
+                                        <form:errors path="fullName" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <label class="form-label">Full Name</label>
-                                    <form:input type="text" class="form-control" path="fullName"/>
+                                    <form:input type="text" class="form-control ${not empty fullnameHasBindError?'is-invalid':''}" path="fullName"/>
+                                    ${fullnameHasBindError}
                                 </div>
                                 <div class="mb-3 col-md-12 col-12">
                                     <label class="form-label">Address</label>

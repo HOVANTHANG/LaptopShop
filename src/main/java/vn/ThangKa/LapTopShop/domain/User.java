@@ -2,6 +2,7 @@ package vn.ThangKa.LapTopShop.domain;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -12,8 +13,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
+    @NotBlank
+    @Size(min =8,message = "Password must be at least 8 character")
     private String password;
+    @NotNull
+    @Size(min=4,message = "Name must be at least 4 character")
     private String fullName;
     private String phone;
     private String address;
