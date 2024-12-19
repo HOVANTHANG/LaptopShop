@@ -20,6 +20,7 @@ public class Product {
     @DecimalMin(value = "0",inclusive = false,message = "Price must be greater than 0")
     private double price;
     private String image;
+    @Column(columnDefinition = "MEDIUMTEXT")
     private String detailDesc;
     private String shortDesc;
     @NotNull(message = "Quantity can not empty")
