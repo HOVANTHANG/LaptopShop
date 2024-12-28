@@ -14,6 +14,14 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/client/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/style.css" type="text/css">
 </head>
 <body class="sb-nav-fixed">
 <jsp:include page="../layout/header.jsp"/>
@@ -22,10 +30,7 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Manager User</h1><br>
-                <a href="/admin/index">DashBoard</a>/
-                <a href="/admin/">Order</a>
-
+                <h1 class="mt-4">Manager Order_detail</h1><br>
                 <div class="mt-5">
 
                     <div class="row">
@@ -36,31 +41,28 @@
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">TotalPrice</th>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Action</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total Amount</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach var="listorder" items="${listorders}">
+                                <c:forEach var="order_detail" items="${order_details}">
                                     <tr>
-                                        <th scope="row">${listorder.id}</th>
-                                        <td>${listorder.totalPrice}</td>
-                                        <td>${listorder.user.fullName}</td>
-                                        <td>${listorder.status}</td>
-                                        <td>
-                                            <a class="btn btn-success" href="/admin/order/detail/${listorder.id}">View</a></button>
-                                            <a class="btn btn-warning" href="/admin/order/update/${listorder.id}">Update</a></button>
-                                            <a class="btn btn-danger" href="/admin/order/delete/${listorder.id}">Delete</a></button>
-                                        </td>
+                                        <th scope="row"> <img class="img-fluid me-5 rounded-circle"
+                                                              style="height:100px; width:100px;" src="/images/product/${order_detail.product.image}" alt=""></th>
+                                        <td>${order_detail.product.name}</td>
+                                        <td>${order_detail.price}</td>
+                                        <td>${order_detail.quantity}</td>
+                                        <td>${order_detail.quantity*order_detail.price}</td>
                                     </tr>
                                 </c:forEach>
 
                                 </tbody>
                             </table>
-
+                            <a href="/admin/orders"><input type="button" class="btn-success" value="Back"/></a>
                         </div>
                     </div>
                 </div>

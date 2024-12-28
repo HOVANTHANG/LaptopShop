@@ -199,67 +199,6 @@
         }
     });
 
-    /*-------------------
-		Quantity change
-	--------------------- */
-    var proQty = $('.pro-qty');
-    proQty.prepend('<span class="dec qtybtn">-</span>');
-    proQty.append('<span class="inc qtybtn">+</span>');
-    proQty.on('click', '.qtybtn', function () {
-        let change=0;
-        var $button = $(this);
-        var oldValue = $button.parent().find('input').val();
-        if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
-            change=1;
-        } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 1) {
-                var newVal = parseFloat(oldValue) - 1;
-                change=-1;
-            } else {
-                newVal = 1;
-            }
-        }
-        const input = $button.parent().find('input');
-        input.val(newVal);
-        //set form index
-        const  index = input.attr("data-cart-detail-index")
-        const el = document.getElementById(`cart_details${index}.quantity`);
-        $(el).val(newVal);
 
-
-
-
-        //get Price
-        const price = input.attr("data-cart-detail-price");
-        const id = input.attr("data-cart-detail-id");
-
-        const  priceElement = $(`p[data-cart-detail-id='${id}']`);
-        if (priceElement){
-            const  newPrice = newVal*(+price);
-            priceElement.text(newPrice.toFixed(2)+"$");
-        }
-
-        const totalPrice = $(`span[data-cart-total-price]`);
-        if (totalPrice && totalPrice.length){
-            const currentTotal = totalPrice.first().attr("data-cart-total-price");
-            let newtotal = +currentTotal;
-            if (change==0){
-                newtotal = +currentTotal;
-            }else{
-                newtotal = change*(+price) + (+currentTotal);
-            }
-            change = 0;
-            totalPrice.each(function (index, element) {
-                $(element).text(newtotal.toFixed(2)+"$");
-                $(element).attr("data-cart-total-price", newtotal);
-            });
-
-
-        }
-
-
-    });
 
 })(jQuery);

@@ -1,6 +1,25 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Place Order Success</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/client/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/client/css/style.css" type="text/css">
+</head>
+<body>
 <div id="preloder">
     <div class="loader"></div>
 </div>
@@ -121,55 +140,21 @@
                 <div class="header__cart">
                     <ul class="nav-list">
                         <c:if test="${not empty pageContext.request.userPrincipal}">
-                        <!-- Shopping Cart Item -->
-                        <li class="nav-item">
-                            <a href="/cart" class="cart-link">
-                                <i class="fa fa-shopping-bag"></i>
-                                <span class="cart-count">${sessionScope.sum}</span>
-                            </a>
-                        </li>
-
-                        <!-- User Profile Dropdown -->
-                        <li class="nav-item dropdown my-auto">
-                            <div class="dropdown">
-                                <a href="#"
-                                   class="dropdown-toggle"
-                                   role="button"
-                                   id="dropdownMenuLink"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    <i class="fa fa-user fa-2x"></i>
+                            <!-- Shopping Cart Item -->
+                            <li class="nav-item">
+                                <a href="/cart" class="cart-link">
+                                    <i class="fa fa-shopping-bag"></i>
+                                    <span class="cart-count">${sessionScope.sum}</span>
                                 </a>
+                            </li>
 
-                                <ul class="header__menu__dropdown dropdown-menu dropdown-menu-end p-4"
-                                    aria-labelledby="dropdownMenuLink">
-                                    <li class="user-profile d-flex align-items-center flex-column" style="min-width: 300px;">
-                                        <img class="profile-image"
-                                             src="/images/avatar/${sessionScope.avatar}"
-                                             alt="User profile"
-                                             style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;" />
-                                        <div class="username text-center my-3">
-                                            ${sessionScope.fullName}
-                                        </div>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Quản lý tài khoản</a></li>
-                                    <li><a class="dropdown-item" href="#">Lịch sử mua hàng</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li>
-                                        <form method="post" action="/logout">
-                                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                        <button class="dropdown-item" >Đăng xuất</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+
                         </c:if>
                         <c:if test="${empty pageContext.request.userPrincipal}">
                             <li class="nav-item">
                                 <a href="/login" class="cart-link">
                                     <i class="fa fa-user"></i>
-                                   Login
+                                    Login
                                 </a>
                             </li>
                         </c:if>
@@ -182,5 +167,24 @@
         </div>
     </div>
 </header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 col-12">
+            <div class="alert alert-success">You have been placed order success!</div>
+            <a href="/" class="btn btn-outline-success">Back Home</a>
+        </div>
+    </div>
 
-<!-- Header Section End -->
+</div>
+
+<script src="/client/js/jquery-3.3.1.min.js"></script>
+<script src="/client/js/bootstrap.min.js"></script>
+<script src="/client/js/jquery.nice-select.min.js"></script>
+<script src="/client/js/jquery-ui.min.js"></script>
+<script src="/client/js/jquery.slicknav.js"></script>
+<script src="/client/js/mixitup.min.js"></script>
+<script src="/client/js/owl.carousel.min.js"></script>
+<script src="/client/js/main.js"></script>
+</body>
+
+</html>

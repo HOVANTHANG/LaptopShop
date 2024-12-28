@@ -31,17 +31,17 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/admin/user",method = RequestMethod.GET)
+    @GetMapping(value = "/admin/user")
     public String listUser(Model model){
         List<User> listUser = userService.getAllUsers();
         model.addAttribute("listUsers", listUser);
-        return "/admin/user/index";
+        return "admin/user/index";
     }
 
-    @RequestMapping(value = "/admin/user/create",method = RequestMethod.GET)
+    @GetMapping(value = "/admin/user/create")
     public String createUser(Model model){
         model.addAttribute("newUser", new User());
-        return "/admin/user/create";
+        return "admin/user/create";
     }
 
 
@@ -57,7 +57,7 @@ public class UserController {
             System.out.println("<<<<"+error.getField()+"-"+error.getDefaultMessage());
         }
         if (newUserbindingResult.hasErrors()) {
-            return "/admin/user/create";
+            return "admin/user/create";
         }
         String avatar=this.uploadFile.uploadFileHandler(file,"avatar");
         String hashPassword=this.passwordEncoder.encode(user.getPassword());
@@ -76,7 +76,7 @@ public class UserController {
     public String detail(Model model, @PathVariable Long id){
         User user = userService.findUserById(id);
         model.addAttribute("user", user);
-        return "/admin/user/detail";
+        return "admin/user/detail";
     }
 
     @RequestMapping(value = "/admin/user/update/{id}",method = RequestMethod.GET)
@@ -85,7 +85,7 @@ public class UserController {
         model.addAttribute("Userupdate", user);
         model.addAttribute("fileAnh", user.getAvatar());
         model.addAttribute("role", user.getRole().getName());
-        return "/admin/user/update";
+        return "admin/user/update";
     }
 
     @RequestMapping(value = "/admin/user/update",method = RequestMethod.POST)
@@ -100,7 +100,7 @@ public class UserController {
         }
         if (userupdateBindingResult.hasErrors()) {
             model.addAttribute("fileAnh", updateUser.getAvatar());
-            return "/admin/user/update";
+            return "admin/user/update";
         }
         if(!file.isEmpty()) {
             String avatar = this.uploadFile.uploadFileHandler(file, "avatar");
@@ -123,7 +123,7 @@ public class UserController {
     public String delete(Model model, @PathVariable Long id){
         User user = userService.findUserById(id);
         model.addAttribute("Userdelete", user);
-        return "/admin/user/delete";
+        return "admin/user/delete";
     }
 
     @RequestMapping(value = "/admin/user/deleteconfirm/{id}",method = RequestMethod.POST)

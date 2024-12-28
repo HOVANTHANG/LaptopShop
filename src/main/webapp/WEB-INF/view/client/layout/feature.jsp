@@ -32,6 +32,10 @@
                         <h6><a href="/product/detail/${listproduct.id}">${listproduct.name}</a></h6>
                         <h6><a href="/product/detail/${listproduct.id}">${listproduct.shortDesc}</a></h6>
                         <h5>$${listproduct.price}</h5>
+                        <form action="/add-product-to-cart/${listproduct.id}" method="post">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <button class="btn btn-outline-success">Add to cart</button>
+                        </form>
                     </div>
                 </div>
             </div>

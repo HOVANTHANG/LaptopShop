@@ -1,9 +1,12 @@
 package vn.ThangKa.LapTopShop.controller.client;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,7 +47,7 @@ public class HomeController {
     }
     @GetMapping("/client/checkout")
     public String checkout() {
-        return "client/shop/checkout";
+        return "client/cart/checkout";
     }
 
     @GetMapping("/register")
@@ -53,7 +56,17 @@ public class HomeController {
         return "client/auth/register";
     }
     @PostMapping ("/handleRegister")
-    public String handleRegister(@ModelAttribute("registerDTO") registerDTO registerDTO) {
+    public String handleRegister(Model model,
+                                 @ModelAttribute("registerDTO") @Valid registerDTO registerDTO,
+                                 BindingResult bindingResult
+                                 ) {
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        for (FieldError error : errors) {
+            System.out.println("<<<<"+error.getField()+"-"+error.getDefaultMessage());
+        }
+        if (bindingResult.hasErrors()) {
+            return "client/auth/register";
+        }
         User user = this.userService.registerDTOtoUser(registerDTO);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -67,5 +80,9 @@ public class HomeController {
     public String login(Model model) {
 
         return "client/auth/login";
+    }
+    @GetMapping("/accessDenied")
+    public String accessDenied(Model model) {
+        return "client/auth/accessDenied";
     }
 }

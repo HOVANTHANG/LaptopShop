@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vn.ThangKa.LapTopShop.domain.User;
 import vn.ThangKa.LapTopShop.domain.dto.registerDTO;
+import vn.ThangKa.LapTopShop.repository.OrderRepository;
+import vn.ThangKa.LapTopShop.repository.ProductRepository;
 import vn.ThangKa.LapTopShop.repository.UserRepository;
 
 import java.util.List;
@@ -13,6 +15,11 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
 
 
@@ -51,6 +58,22 @@ public class UserService {
 
         return user;
     }
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
 
+    public long countUser() {
+        return userRepository.count();
+    }
+    public long countProduct() {
+        return productRepository.count();
+    }
+    public long countOrder() {
+        return orderRepository.count();
+    }
 }

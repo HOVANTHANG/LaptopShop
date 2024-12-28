@@ -1,41 +1,35 @@
 package vn.ThangKa.LapTopShop.domain;
 
-
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 
 @Entity
-@Table(name = "order_details")
-public class Order_detail {
+@Table(name = "cart_details")
+public class CartDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    private double price;
+
     private int quantity;
 
-    @ManyToOne()
-    @JoinColumn(name = "order_id")
-    private Order order;
+    private double price;
 
     @ManyToOne()
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
+
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public int getQuantity() {
@@ -46,12 +40,20 @@ public class Order_detail {
         this.quantity = quantity;
     }
 
-    public Order getOrder() {
-        return order;
+    public double getPrice() {
+        return price;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Product getProduct() {

@@ -26,23 +26,38 @@
                                 <form:form method="post"
                                       action="/handleRegister"
                                       modelAttribute="registerDTO">
+                                    <c:set var="emailHasBindError">
+                                        <form:errors path="email" cssClass="invalid-feedback"/>
+                                    </c:set>
+                                    <c:set var="confirmPassHasError">
+                                        <form:errors path="confirmPassword" cssClass="invalid-feedback"/>
+                                    </c:set>
+                                    <c:set var="firstnamePassHasError">
+                                        <form:errors path="firstName" cssClass="invalid-feedback"/>
+                                    </c:set>
+                                    <c:set var="lastnamePassHasError">
+                                        <form:errors path="lastName" cssClass="invalid-feedback"/>
+                                    </c:set>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <form:input class="form-control" path="firstName" type="text" placeholder="Enter your first name" />
+                                                <form:input class="form-control ${not empty firstnamePassHasError? 'is-invalid':''}" path="firstName" type="text" placeholder="Enter your first name" />
                                                 <label class="form-label">First name</label>
+                                                    ${firstnamePassHasError}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating">
-                                                <form:input class="form-control" path="lastName" type="text" placeholder="Enter your last name" />
+                                                <form:input class="form-control ${not empty lastnamePassHasError? 'is-invalid':''}" path="lastName" type="text" placeholder="Enter your last name" />
                                                 <label class="form-label">Last name</label>
+                                                    ${lastnamePassHasError}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <form:input class="form-control" path="email" type="email" placeholder="name@example.com" />
+                                        <form:input type="email" class="form-control ${not empty emailHasBindError? 'is-invalid':''}" path="email"/>
                                         <label class="form-label">Email address</label>
+                                            ${emailHasBindError}
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
@@ -53,13 +68,14 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-floating mb-3 mb-md-0">
-                                                <form:input class="form-control" path="confirmPassword" type="password" placeholder="Confirm password" />
+                                                <form:input class="form-control ${not empty confirmPassHasError? 'is-invalid':''}" path="confirmPassword" type="password"  />
                                                 <label class="form-label">Confirm Password</label>
+                                                ${confirmPassHasError}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mt-4 mb-0">
-                                        <button type="submit" class="btn btn-primary">Create</button>
+                                        <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Create Account</button></div>
                                     </div>
                                 </form:form>
                             </div>
@@ -74,5 +90,10 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/js/scripts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script src="/js/chart-area-demo.js"></script>
+<script src="/js/chart-bar-demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="/js/datatables-simple-demo.js"></script>
 </body>
 </html>

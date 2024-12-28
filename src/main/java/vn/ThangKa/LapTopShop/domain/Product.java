@@ -29,8 +29,11 @@ public class Product {
     private String factory;
     private String target;
 
-    @OneToMany(mappedBy = "product_id")
+    @OneToMany(mappedBy = "product")
     private List<Order_detail> order_details;
+
+    @OneToMany(mappedBy = "product")
+    private List<CartDetails> cart_details;
 
     public Long getId() {
         return id;
@@ -118,5 +121,13 @@ public class Product {
 
     public void setOrder_details(List<Order_detail> order_details) {
         this.order_details = order_details;
+    }
+
+    public List<CartDetails> getCart_details() {
+        return cart_details;
+    }
+
+    public void setCart_details(List<CartDetails> cart_details) {
+        this.cart_details = cart_details;
     }
 }

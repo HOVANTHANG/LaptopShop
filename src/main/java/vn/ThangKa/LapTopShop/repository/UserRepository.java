@@ -8,4 +8,6 @@ import vn.ThangKa.LapTopShop.domain.User;
 public interface UserRepository extends JpaRepository<User,Long> {
     User findByEmail(String email);
     User findUserById(Long id);
+
+    boolean existsByEmail(String email);
 }

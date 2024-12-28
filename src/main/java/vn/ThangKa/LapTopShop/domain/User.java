@@ -3,6 +3,7 @@ package vn.ThangKa.LapTopShop.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import vn.ThangKa.LapTopShop.service.validator.StrongPassword;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class User {
     private String email;
     @NotBlank
     @Size(min =8,message = "Password must be at least 8 character")
+    //@StrongPassword
     private String password;
     @NotNull
     @Size(min=4,message = "Name must be at least 4 character")
@@ -33,6 +35,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
 
     public Long getId() {
         return id;
@@ -103,6 +108,14 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     @Override

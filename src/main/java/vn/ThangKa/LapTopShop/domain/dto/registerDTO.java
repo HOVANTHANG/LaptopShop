@@ -1,10 +1,20 @@
 package vn.ThangKa.LapTopShop.domain.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
+import vn.ThangKa.LapTopShop.service.validator.RegisterChecked;
+
+@RegisterChecked
 public class registerDTO {
+    @Size(min=4,message = "firstName must be at least 4 character")
     private String firstName;
+    @Size(min=4,message = "lastName must be at least 4 character")
     private String lastName;
+
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
     private String password;
+    @Size(min=4,message = "confirmPassword must be at least 3 character")
     private String confirmPassword;
 
     public String getFirstName() {
