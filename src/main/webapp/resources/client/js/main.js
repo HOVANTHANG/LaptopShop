@@ -262,4 +262,70 @@
 
     });
 
+    $("#btnFilter").click(function (e){
+        e.preventDefault();
+
+        let factoryArr=[];
+        let targetArr=[];
+        let priceArr=[];
+
+        $("#factoryFilter .form-check-input:checked").each(function (e){
+            factoryArr.push($(this).val());
+        });
+        $("#targetFilter .form-check-input:checked").each(function (e){
+            targetArr.push($(this).val());
+        });
+        $("#priceFilter .form-check-input:checked").each(function (e){
+            priceArr.push($(this).val());
+        });
+
+        let sortValue=$('input[name="optradio"]:checked').val();
+        const  currentURL = new URL(window.location.href);
+        const searchParams = currentURL.searchParams;
+
+        searchParams.set('page','1');
+        searchParams.set('sort',sortValue);
+
+        //reset
+        searchParams.delete('factory')
+        searchParams.delete('target')
+        searchParams.delete('price')
+
+        if (factoryArr.length>0){
+            searchParams.set('factory',factoryArr.join(','));
+        }
+        if (targetArr.length>0){
+            searchParams.set('target',targetArr.join(','));
+        }
+        if (priceArr.length>0){
+            searchParams.set('price',priceArr.join(','));
+        }
+
+        window.location.href = currentURL.toString();
+
+    });
+      const params = new URLSearchParams(window.location.search);
+
+    if (params.has('factory')){
+        const factories = params.get('factory').split(',');
+        factories.forEach(factory => {
+            $('#factoryFilter .form-check-input[value="' + factory + '"]').prop('checked', true);
+        });
+    }
+    if (params.has('target')){
+        const targets = params.get('target').split(',');
+        targets.forEach(target => {
+            $('#targetFilter .form-check-input[value="' + target + '"]').prop('checked', true);
+        });
+    }
+    if (params.has('price')){
+        const prices = params.get('price').split(',');
+        prices.forEach(price => {
+            $('#priceFilter .form-check-input[value="' + price + '"]').prop('checked', true);
+        });
+    }
+
+
+
+
 })(jQuery);

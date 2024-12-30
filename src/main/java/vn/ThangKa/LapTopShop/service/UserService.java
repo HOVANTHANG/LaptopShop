@@ -1,6 +1,8 @@
 package vn.ThangKa.LapTopShop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.ThangKa.LapTopShop.domain.User;
 import vn.ThangKa.LapTopShop.domain.dto.registerDTO;
@@ -28,8 +30,8 @@ public class UserService {
     }
 
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Page<User> getAllUsers(Pageable  pageable) {
+        return userRepository.findAll(pageable);
     }
     public User getUserByemail(String email) {
         return userRepository.findByEmail(email);

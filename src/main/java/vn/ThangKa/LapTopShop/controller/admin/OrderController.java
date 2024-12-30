@@ -1,5 +1,8 @@
 package vn.ThangKa.LapTopShop.controller.admin;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +24,25 @@ public class OrderController {
 
 
     @GetMapping("/admin/orders")
-    public String getorders(Model model) {
+    public String getorders(Model model,
+                            @RequestParam("page") Optional<String> pageOptional) {
+        int page =1;
+        try{
+            if(pageOptional.isPresent()){
+                page = Integer.parseInt(pageOptional.get());
+            }else{
 
-        model.addAttribute("listorders",this.orderService.findAll());
+            }
+        }catch (Exception e){
+
+        }
+        Pageable pageable = PageRequest.of(page-1,2);
+        Page<Order> orders = this.orderService.findAll(pageable);
+        List<Order> orderList = orders.getContent();
+
+        model.addAttribute("listorders",orderList);
+        model.addAttribute("currentPage",page-1);
+        model.addAttribute("totalPage",orders.getTotalPages());
 
         return "admin/order/index";
     }

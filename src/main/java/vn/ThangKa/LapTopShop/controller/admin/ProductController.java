@@ -2,6 +2,9 @@ package vn.ThangKa.LapTopShop.controller.admin;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import vn.ThangKa.LapTopShop.service.UploadFile;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ProductController {
@@ -24,10 +28,29 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping("/admin/products")
-    public String getproducts(Model model) {
+    @GetMapping("/admin/products")
+    public String getproducts(Model model,
+                              @RequestParam("page")Optional<String> pageOptionl) {
 
-        model.addAttribute("listproduct", productService.findAll());
+        int page=1;
+        try {
+            if(pageOptionl.isPresent()){
+                page=Integer.parseInt(pageOptionl.get());
+            }else{
+
+            }
+        }catch (Exception e) {
+        }
+
+        Pageable pageable = PageRequest.of(page-1, 2);
+        Page<Product> products = productService.fetchProduct(pageable);
+
+        List<Product> productList = products.getContent();
+
+        model.addAttribute("listproduct",productList);
+        model.addAttribute("currentPage",page-1);
+        model.addAttribute("totalPage",products.getTotalPages());
+
         return "admin/product/index";
     }
 

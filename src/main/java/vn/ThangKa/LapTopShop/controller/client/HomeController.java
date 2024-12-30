@@ -2,6 +2,9 @@ package vn.ThangKa.LapTopShop.controller.client;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +36,11 @@ public class HomeController {
 
     @GetMapping("")
     public String home(Model model) {
-        List<Product> products = productService.findAll();
-        model.addAttribute("listProducts", products);
+        Pageable pageable = PageRequest.of(0,10);
+        Page<Product> products = this.productService.fetchProduct(pageable);
+
+        List<Product> productList = products.getContent();
+        model.addAttribute("listProducts", productList);
         return "client/homepage/index";
     }
     @GetMapping("/client/shop")

@@ -60,7 +60,23 @@
 
                                 </tbody>
                             </table>
-
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item">
+                                        <a class="${currentPage eq 0 ? 'page-link disabled':'page-link'}" href="/admin/orders?page=${currentPage}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <c:forEach begin="0" end="${totalPage-1}" varStatus="loop">
+                                        <li class="page-item"><a class="${currentPage eq (loop.index) ? 'page-link active':'page-link'}" href="/admin/orders?page=${loop.index +1}">${loop.index+1}</a></li>
+                                    </c:forEach>
+                                    <li class="page-item">
+                                        <a class="${currentPage eq (totalPage-1) ? 'page-link disabled':'page-link'}" href="/admin/orders?page=${currentPage+2}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

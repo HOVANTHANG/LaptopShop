@@ -2,6 +2,9 @@ package vn.ThangKa.LapTopShop.controller.admin;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +20,7 @@ import vn.ThangKa.LapTopShop.service.UploadFile;
 import vn.ThangKa.LapTopShop.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -32,9 +36,27 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/admin/user")
-    public String listUser(Model model){
-        List<User> listUser = userService.getAllUsers();
+    public String listUser(Model model,
+                            @RequestParam("page") Optional<String> pageOptional){
+        int page=1;
+        try {
+            if (pageOptional.isPresent()){
+                page = Integer.parseInt(pageOptional.get());
+            }else{
+
+            }
+
+        }catch (Exception e) {
+
+        }
+        Pageable pageable = PageRequest.of(page-1, 2);
+        Page<User> pageUser = this.userService.getAllUsers(pageable);
+
+        List<User> listUser = pageUser.getContent();
+
         model.addAttribute("listUsers", listUser);
+        model.addAttribute("currentPage", page-1);
+        model.addAttribute("totalPage", pageUser.getTotalPages());
         return "admin/user/index";
     }
 

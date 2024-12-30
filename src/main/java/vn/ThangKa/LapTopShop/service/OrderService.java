@@ -1,5 +1,7 @@
 package vn.ThangKa.LapTopShop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.ThangKa.LapTopShop.domain.Order;
 import vn.ThangKa.LapTopShop.domain.Order_detail;
@@ -20,8 +22,9 @@ public class OrderService {
         this.orderDetailsRepository = orderDetailsRepository;
     }
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
+    public Page<Order> findAll(Pageable pageable) {
+
+        return orderRepository.findAll(pageable);
     }
 
     public Optional<Order> findByID(long id) {

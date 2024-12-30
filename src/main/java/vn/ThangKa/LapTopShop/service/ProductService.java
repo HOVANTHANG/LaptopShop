@@ -1,12 +1,16 @@
 package vn.ThangKa.LapTopShop.service;
 
-import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.ThangKa.LapTopShop.domain.*;
+import vn.ThangKa.LapTopShop.domain.dto.ProductCriteriaDTO;
 import vn.ThangKa.LapTopShop.repository.*;
+import vn.ThangKa.LapTopShop.service.Specification.ProductSpecs;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +40,73 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public List<Product> findAll() {
-        return productRepository.findAll();
+
+    public Page<Product> fetchProductSpec(Pageable pageable, ProductCriteriaDTO productCriteriaDTO) {
+       if(productCriteriaDTO.getFactory()==null && productCriteriaDTO.getPrice()==null
+       &&productCriteriaDTO.getTarget()==null){
+           this.productRepository.findAll(pageable);
+       }
+        Specification<Product> combinedSpec = Specification.where(null);
+       if(productCriteriaDTO.getFactory()!=null && productCriteriaDTO.getFactory().isPresent()){
+           Specification<Product> currenspec = ProductSpecs.matchListFactory(productCriteriaDTO.getFactory().get());
+           combinedSpec=combinedSpec.and(currenspec);
+       }
+        if(productCriteriaDTO.getTarget()!=null && productCriteriaDTO.getTarget().isPresent()){
+            Specification<Product> currenspec = ProductSpecs.matchListTarGet(productCriteriaDTO.getTarget().get());
+            combinedSpec=combinedSpec.and(currenspec);
+        }
+        if(productCriteriaDTO.getPrice()!=null && productCriteriaDTO.getPrice().isPresent()){
+            Specification<Product> currenspec = this.buildPriceSpecification(productCriteriaDTO.getPrice().get());
+            combinedSpec=combinedSpec.and(currenspec);
+        }
+
+
+        return this.productRepository.findAll(combinedSpec,pageable);
+    }
+
+    public static Specification<Product> buildPriceSpecification(List<String> price) {
+        Specification<Product> combinedSpec = Specification.where(null);
+
+        for(String p:price){
+            double min=0;
+            double max=0;
+            switch (p){
+                case "duoi-25-trieu":
+                        min=1;
+                        max=1000;
+                        break;
+                case "tu-25-40-trieu":
+                    min=1000;
+                    max=1500;
+                    break;
+                case "tu-40-50-trieu":
+                    min=1500;
+                    max=2000;
+                    break;
+                case "tren-50-trieu":
+                    min=2000;
+                    max=10000;
+                    break;
+            }
+            if(min!=0 && max!=0){
+                Specification<Product> currenspec = ProductSpecs.matchPrice(min,max);
+                combinedSpec =combinedSpec.or(currenspec);
+
+            }
+        }
+        return combinedSpec;
+    }
+
+
+
+
+
+
+
+
+    public Page<Product> fetchProduct(Pageable pageable) {
+
+        return this.productRepository.findAll(pageable);
     }
 
     public Optional<Product> findById(Long id) {
